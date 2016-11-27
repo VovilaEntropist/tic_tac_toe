@@ -1,4 +1,4 @@
-package i.dont.care.tictactoe.gamelogic;
+package i.dont.care.tictactoe.gamelogic.ai;
 
 import i.dont.care.tictactoe.gamelogic.board.CellArray;
 import i.dont.care.tictactoe.gamelogic.board.Mark;

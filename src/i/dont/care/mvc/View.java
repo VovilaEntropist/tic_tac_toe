@@ -19,4 +19,6 @@ public interface View {
 	
 	void endGame(CellArray board, Player winner);
 	
+	void denyMove(CellArray board);
+	
 }

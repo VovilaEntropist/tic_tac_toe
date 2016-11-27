@@ -30,6 +30,19 @@ public class CellArray implements Copyable<CellArray> {
 		return cellArray;
 	}
 	
+	public void fill(CellArray someCellArray) {
+		this.forEach((i, cell) -> cell.setMark(someCellArray.at(i).getMark()));
+	}
+	
+	public boolean isValidIndex(Index i) {
+		return isValidIndex(i.row(), i.column());
+	}
+	
+	public boolean isValidIndex(int row, int collumn) {
+		return row >= 0 && collumn >= 0
+				&& row < getRows() && collumn < getColumns();
+	}
+	
 	public int getRows() {
 		return cells.length;
 	}
@@ -76,5 +89,8 @@ public class CellArray implements Copyable<CellArray> {
 		return counter.value;
 	}
 	
+	public boolean isEmpty() {
+		return getEmptyCount() == getRows() * getColumns();
+	}
 	
 }

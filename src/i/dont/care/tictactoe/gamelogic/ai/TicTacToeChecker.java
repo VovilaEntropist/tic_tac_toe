@@ -1,5 +1,7 @@
-package i.dont.care.tictactoe.gamelogic;
+package i.dont.care.tictactoe.gamelogic.ai;
 
+import i.dont.care.tictactoe.gamelogic.ai.Step;
+import i.dont.care.tictactoe.gamelogic.ai.TicTacToeNode;
 import i.dont.care.tictactoe.gamelogic.board.CellArray;
 import i.dont.care.tictactoe.gamelogic.board.Mark;
 import i.dont.care.search.interfaces.DecisionChecker;
@@ -63,7 +65,7 @@ public class TicTacToeChecker implements DecisionChecker {
 	}
 	
 	private boolean checkAt(int row, int column, CellArray board) {
-		if (row < 0 && row >= board.getRows() && column < 0 && column >= board.getColumns()) {
+		if (!board.isValidIndex(row, column)) {
 			return false;
 		}
 		
