@@ -1,4 +1,4 @@
-package i.dont.care.utils;
+package i.dont.care.utils.wrappers;
 
 public class IntWrapper {
 	

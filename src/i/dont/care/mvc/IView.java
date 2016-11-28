@@ -3,7 +3,7 @@ package i.dont.care.mvc;
 import i.dont.care.tictactoe.gamelogic.Player;
 import i.dont.care.tictactoe.gamelogic.board.CellArray;
 
-public interface View {
+public interface IView {
 	
 	void doMove();
 	

@@ -1,4 +1,4 @@
-package i.dont.care.utils;
+package i.dont.care.message;
 
 import java.util.ArrayList;
 

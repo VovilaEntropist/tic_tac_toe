@@ -1,4 +1,4 @@
-package i.dont.care.tictactoe.swingui;
+package i.dont.care.tictactoe.view.swing;
 
 import javax.swing.*;
 import java.awt.*;

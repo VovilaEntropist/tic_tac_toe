@@ -1,17 +1,18 @@
 package i.dont.care.tictactoe.gamelogic;
 
-import i.dont.care.mvc.Model;
+import i.dont.care.message.MessageFactory;
+import i.dont.care.mvc.IModel;
 import i.dont.care.tictactoe.gamelogic.ai.Step;
 import i.dont.care.tictactoe.gamelogic.ai.TicTacToeChecker;
 import i.dont.care.tictactoe.gamelogic.ai.TicTacToeNode;
 import i.dont.care.tictactoe.gamelogic.board.CellArray;
 import i.dont.care.tictactoe.gamelogic.board.Mark;
 import i.dont.care.utils.Index;
-import i.dont.care.utils.ObjectCollection;
+import i.dont.care.message.ObjectCollection;
 
 import java.util.Observable;
 
-public class TicTacToe extends Observable implements Model {
+public class TicTacToe extends Observable implements IModel {
 	
 	public static final int ROW_COUNT = 3;
 	public static final int COLUMN_COUNT = 3;
@@ -62,17 +63,17 @@ public class TicTacToe extends Observable implements Model {
 	@Override
 	public void addPlayer(Player player) {
 		if (players.size() >= PLAYER_COUNT) {
-			notifyBanPlayer(player, "Игроков слишком много");
+			notifyKickPlayer(player, "Игроков слишком много");
 			return;
 		}
 		
 		if (players.isNameTaken(player)) {
-			notifyBanPlayer(player, "Такое имя уже используется");
+			notifyKickPlayer(player, "Такое имя уже используется");
 			return;
 		}
 		
 		if (players.isMarkTaken(player)) {
-			notifyBanPlayer(player, "Такая отметка уже используется");
+			notifyKickPlayer(player, "Такая отметка уже используется");
 			return;
 		}
 		
@@ -91,51 +92,51 @@ public class TicTacToe extends Observable implements Model {
 	}
 	
 	@Override
-	public void notifyGameStarted(CellArray cellArray) {
+	public void notifyGameStarted(CellArray board) {
 		this.setChanged();
-		this.notifyObservers(new ObjectCollection((cellArray)));
+		this.notifyObservers(MessageFactory.createGameStarted(board));
 	}
 	
 	@Override
 	public void notifyEndOfMove(Player player) {
 		this.setChanged();
-		this.notifyObservers(new ObjectCollection(player));
+		this.notifyObservers(MessageFactory.createEndMove(player));
 	}
 	
 	@Override
 	public void notifyPlayerGoes(Player player) {
 		this.setChanged();
-		this.notifyObservers(new ObjectCollection(player));
+		this.notifyObservers(MessageFactory.createStartMove(player));
 	}
 	
 	@Override
-	public void notifyBoardChanged(CellArray cellArray) {
+	public void notifyBoardChanged(CellArray board) {
 		this.setChanged();
-		this.notifyObservers(new ObjectCollection(cellArray));
+		this.notifyObservers(MessageFactory.createBoardChanged(board));
 	}
 	
 	@Override
 	public void notifyPlayerWin(Player player) {
 		this.setChanged();
-		this.notifyObservers(new ObjectCollection(player));
+		this.notifyObservers(MessageFactory.createPlayerWin(player));
 	}
 	
 	@Override
 	public void notifyGameEnded() {
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(MessageFactory.createGameEnded());
 	}
 	
 	@Override
-	public void notifyBanPlayer(Player player, String reason) {
+	public void notifyKickPlayer(Player player, String reason) {
 		this.setChanged();
-		this.notifyObservers(new ObjectCollection(player, reason));
+		this.notifyObservers(MessageFactory.createKickPlayer(player, reason));
 	}
 	
 	@Override
 	public void notifyInvalidMove(Player player) {
 		this.setChanged();
-		this.notifyObservers(new ObjectCollection(player));
+		this.notifyObservers(MessageFactory.createInvalidMove(player));
 	}
 
 }

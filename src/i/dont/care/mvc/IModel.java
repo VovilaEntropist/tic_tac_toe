@@ -4,7 +4,7 @@ import i.dont.care.tictactoe.gamelogic.Player;
 import i.dont.care.tictactoe.gamelogic.board.CellArray;
 import i.dont.care.utils.Index;
 
-public interface Model {
+public interface IModel {
 	
 	void doMove(Player player, Index position);
 	
@@ -24,7 +24,7 @@ public interface Model {
 	
 	void notifyGameEnded();
 	
-	void notifyBanPlayer(Player player, String reason);
+	void notifyKickPlayer(Player player, String reason);
 	
 	void notifyInvalidMove(Player player);
 	

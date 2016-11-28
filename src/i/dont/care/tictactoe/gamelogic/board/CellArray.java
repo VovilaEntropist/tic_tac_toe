@@ -2,7 +2,7 @@ package i.dont.care.tictactoe.gamelogic.board;
 
 import i.dont.care.utils.Copyable;
 import i.dont.care.utils.Index;
-import i.dont.care.utils.IntWrapper;
+import i.dont.care.utils.wrappers.IntWrapper;
 
 import java.util.function.BiConsumer;
 
