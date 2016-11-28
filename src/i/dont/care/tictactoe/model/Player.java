@@ -1,8 +1,6 @@
-package i.dont.care.tictactoe.gamelogic;
+package i.dont.care.tictactoe.model;
 
-import i.dont.care.tictactoe.gamelogic.board.Mark;
-
-import java.util.Observer;
+import i.dont.care.tictactoe.model.board.Mark;
 
 public class Player {
 	private String nickname;

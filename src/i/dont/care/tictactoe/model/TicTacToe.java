@@ -1,14 +1,13 @@
-package i.dont.care.tictactoe.gamelogic;
+package i.dont.care.tictactoe.model;
 
 import i.dont.care.message.MessageFactory;
 import i.dont.care.mvc.IModel;
-import i.dont.care.tictactoe.gamelogic.ai.Step;
-import i.dont.care.tictactoe.gamelogic.ai.TicTacToeChecker;
-import i.dont.care.tictactoe.gamelogic.ai.TicTacToeNode;
-import i.dont.care.tictactoe.gamelogic.board.CellArray;
-import i.dont.care.tictactoe.gamelogic.board.Mark;
+import i.dont.care.tictactoe.model.ai.Step;
+import i.dont.care.tictactoe.model.ai.TicTacToeChecker;
+import i.dont.care.tictactoe.model.ai.TicTacToeNode;
+import i.dont.care.tictactoe.model.board.CellArray;
+import i.dont.care.tictactoe.model.board.Mark;
 import i.dont.care.utils.Index;
-import i.dont.care.message.ObjectCollection;
 
 import java.util.Observable;
 
@@ -98,15 +97,15 @@ public class TicTacToe extends Observable implements IModel {
 	}
 	
 	@Override
-	public void notifyEndOfMove(Player player) {
+	public void notifyEndOfMove(Player targetPlayer) {
 		this.setChanged();
-		this.notifyObservers(MessageFactory.createEndMove(player));
+		this.notifyObservers(MessageFactory.createEndMove(targetPlayer));
 	}
 	
 	@Override
-	public void notifyPlayerGoes(Player player) {
+	public void notifyPlayerGoes(Player targetPlayer) {
 		this.setChanged();
-		this.notifyObservers(MessageFactory.createStartMove(player));
+		this.notifyObservers(MessageFactory.createStartMove(targetPlayer));
 	}
 	
 	@Override
@@ -116,9 +115,9 @@ public class TicTacToe extends Observable implements IModel {
 	}
 	
 	@Override
-	public void notifyPlayerWin(Player player) {
+	public void notifyPlayerWin(Player winner) {
 		this.setChanged();
-		this.notifyObservers(MessageFactory.createPlayerWin(player));
+		this.notifyObservers(MessageFactory.createPlayerWin(winner));
 	}
 	
 	@Override
@@ -128,15 +127,15 @@ public class TicTacToe extends Observable implements IModel {
 	}
 	
 	@Override
-	public void notifyKickPlayer(Player player, String reason) {
+	public void notifyKickPlayer(Player targetPlayer, String reason) {
 		this.setChanged();
-		this.notifyObservers(MessageFactory.createKickPlayer(player, reason));
+		this.notifyObservers(MessageFactory.createKickPlayer(targetPlayer, reason));
 	}
 	
 	@Override
-	public void notifyInvalidMove(Player player) {
+	public void notifyInvalidMove(Player targetPlayer) {
 		this.setChanged();
-		this.notifyObservers(MessageFactory.createInvalidMove(player));
+		this.notifyObservers(MessageFactory.createInvalidMove(targetPlayer));
 	}
 
 }

@@ -1,7 +1,7 @@
 package i.dont.care.mvc;
 
-import i.dont.care.tictactoe.gamelogic.Player;
-import i.dont.care.tictactoe.gamelogic.board.CellArray;
+import i.dont.care.tictactoe.model.Player;
+import i.dont.care.tictactoe.model.board.CellArray;
 import i.dont.care.utils.Index;
 
 public interface IModel {
@@ -14,18 +14,18 @@ public interface IModel {
 	
 	void notifyGameStarted(CellArray cellArray);
 	
-	void notifyEndOfMove(Player player);
+	void notifyEndOfMove(Player targetPlayer);
 	
-	void notifyPlayerGoes(Player player);
+	void notifyPlayerGoes(Player targetPlayer);
 	
 	void notifyBoardChanged(CellArray cellArray);
 	
-	void notifyPlayerWin(Player player);
+	void notifyPlayerWin(Player winner);
 	
 	void notifyGameEnded();
 	
-	void notifyKickPlayer(Player player, String reason);
+	void notifyKickPlayer(Player targetPlayer, String reason);
 	
-	void notifyInvalidMove(Player player);
+	void notifyInvalidMove(Player targetPlayer);
 	
 }

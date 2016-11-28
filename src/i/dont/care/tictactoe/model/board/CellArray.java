@@ -1,4 +1,4 @@
-package i.dont.care.tictactoe.gamelogic.board;
+package i.dont.care.tictactoe.model.board;
 
 import i.dont.care.utils.Copyable;
 import i.dont.care.utils.Index;
@@ -93,4 +93,17 @@ public class CellArray implements Copyable<CellArray> {
 		return getEmptyCount() == getRows() * getColumns();
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		
+		for (int i = 0; i < getRows(); i++) {
+			for (int j = 0; j < getColumns(); j++) {
+				sb.append(cells[i][j]);
+			}
+			sb.append("\n");
+		}
+		
+		return sb.toString();
+	}
 }

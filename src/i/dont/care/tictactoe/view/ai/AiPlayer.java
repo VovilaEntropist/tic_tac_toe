@@ -1,10 +1,11 @@
 package i.dont.care.tictactoe.view.ai;
 
+import i.dont.care.message.Message;
 import i.dont.care.mvc.IController;
 import i.dont.care.mvc.IView;
-import i.dont.care.tictactoe.gamelogic.Player;
-import i.dont.care.tictactoe.gamelogic.board.CellArray;
-import i.dont.care.message.ObjectCollection;
+import i.dont.care.tictactoe.model.Player;
+import i.dont.care.tictactoe.model.board.CellArray;
+import i.dont.care.utils.Index;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -19,7 +20,7 @@ public class AiPlayer implements IView, Observer {
 	}
 	
 	@Override
-	public void doMove() {
+	public void doMove(Index index) {
 		//TODO генерация хода
 		//controller.doMove(player);
 	}
@@ -62,7 +63,7 @@ public class AiPlayer implements IView, Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		//TODO Тут по хорошему нужна проерка на тип и если что, то бахать исключения.
-		ObjectCollection objects = (ObjectCollection) arg;
+		Message message = (Message) arg;
 		
 		
 	}

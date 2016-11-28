@@ -2,7 +2,7 @@ package i.dont.care.tictactoe.controller;
 
 import i.dont.care.mvc.IController;
 import i.dont.care.mvc.IModel;
-import i.dont.care.tictactoe.gamelogic.Player;
+import i.dont.care.tictactoe.model.Player;
 import i.dont.care.utils.Index;
 
 public class Controller implements IController {

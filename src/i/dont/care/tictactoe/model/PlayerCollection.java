@@ -1,4 +1,4 @@
-package i.dont.care.tictactoe.gamelogic;
+package i.dont.care.tictactoe.model;
 
 import java.util.ArrayList;
 

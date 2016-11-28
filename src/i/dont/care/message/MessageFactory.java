@@ -1,7 +1,7 @@
 package i.dont.care.message;
 
-import i.dont.care.tictactoe.gamelogic.Player;
-import i.dont.care.tictactoe.gamelogic.board.CellArray;
+import i.dont.care.tictactoe.model.Player;
+import i.dont.care.tictactoe.model.board.CellArray;
 
 public class MessageFactory {
 	

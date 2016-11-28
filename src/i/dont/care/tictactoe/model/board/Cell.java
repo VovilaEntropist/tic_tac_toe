@@ -1,4 +1,4 @@
-package i.dont.care.tictactoe.gamelogic.board;
+package i.dont.care.tictactoe.model.board;
 
 public class Cell {
 	
@@ -18,5 +18,10 @@ public class Cell {
 	
 	public void setMark(Mark mark) {
 		this.mark = mark;
+	}
+	
+	@Override
+	public String toString() {
+		return String.valueOf(mark.getChar());
 	}
 }

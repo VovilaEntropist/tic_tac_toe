@@ -1,4 +1,4 @@
-package i.dont.care.tictactoe.gamelogic.board;
+package i.dont.care.tictactoe.model.board;
 
 public enum Mark {
 	Empty('_'),

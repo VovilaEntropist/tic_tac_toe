@@ -1,6 +1,6 @@
-package i.dont.care.tictactoe.gamelogic.ai;
+package i.dont.care.tictactoe.model.ai;
 
-import i.dont.care.tictactoe.gamelogic.board.Mark;
+import i.dont.care.tictactoe.model.board.Mark;
 import i.dont.care.utils.Index;
 
 public class Step {

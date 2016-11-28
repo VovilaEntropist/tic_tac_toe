@@ -29,6 +29,10 @@ public class Message implements Serializable {
 		this(command, new ParameterCollection());
 	}
 	
+	public int getCommand() {
+		return command;
+	}
+	
 	public void addParameter(String key, Object value) {
 		parameters.put(key, value);
 	}
