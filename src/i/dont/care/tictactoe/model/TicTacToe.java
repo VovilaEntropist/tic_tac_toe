@@ -2,9 +2,9 @@ package i.dont.care.tictactoe.model;
 
 import i.dont.care.message.MessageFactory;
 import i.dont.care.mvc.IModel;
-import i.dont.care.tictactoe.model.ai.Step;
-import i.dont.care.tictactoe.model.ai.TicTacToeChecker;
-import i.dont.care.tictactoe.model.ai.TicTacToeNode;
+import i.dont.care.tictactoe.model.logic.Step;
+import i.dont.care.tictactoe.model.logic.TicTacToeChecker;
+import i.dont.care.tictactoe.model.logic.TicTacToeNode;
 import i.dont.care.tictactoe.model.board.CellArray;
 import i.dont.care.tictactoe.model.board.Mark;
 import i.dont.care.utils.Index;

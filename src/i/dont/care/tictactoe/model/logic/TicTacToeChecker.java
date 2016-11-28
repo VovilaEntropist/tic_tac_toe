@@ -1,4 +1,4 @@
-package i.dont.care.tictactoe.model.ai;
+package i.dont.care.tictactoe.model.logic;
 
 import i.dont.care.tictactoe.model.board.CellArray;
 import i.dont.care.tictactoe.model.board.Mark;
