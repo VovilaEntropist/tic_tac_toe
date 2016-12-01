@@ -1,0 +1,87 @@
+package i.dont.care.clientserver.message;
+
+import i.dont.care.tictactoe.Configuration;
+import i.dont.care.tictactoe.model.Player;
+import i.dont.care.tictactoe.model.board.CellArray;
+import i.dont.care.utils.Index;
+
+public class MessageFactory {
+	
+	public static Message createGameStarted(CellArray board) {
+		Message message = new Message(Configuration.GAME_STARTED);
+		message.addParameter(Configuration.BOARD, board);
+		return message;
+	}
+	
+	public static Message createEndMove(Player player) {
+		Message message = new Message(Configuration.END_OF_MOVE);
+		message.addParameter(Configuration.PLAYER, player);
+		return message;
+	}
+	
+	public static Message createStartMove(Player player) {
+		Message message = new Message(Configuration.START_OF_MOVE);
+		message.addParameter(Configuration.PLAYER, player);
+		return message;
+	}
+	
+	public static Message createBoardChanged(CellArray board) {
+		Message message = new Message(Configuration.BOARD_CHANGED);
+		message.addParameter(Configuration.BOARD, board);
+		return message;
+	}
+	
+	public static Message createTie() {
+		Message message = new Message(Configuration.TIE);
+		return message;
+	}
+	
+	public static Message createPlayerWin(Player player) {
+		Message message = new Message(Configuration.PLAYER_WIN);
+		message.addParameter(Configuration.PLAYER, player);
+		return message;
+	}
+	
+	public static Message createGameEnded() {
+		Message message = new Message(Configuration.GAME_ENDED);
+		return message;
+	}
+	
+	public static Message createKickPlayer(Player player, String reason) {
+		Message message = new Message(Configuration.KICK_PLAYER);
+		message.addParameter(Configuration.PLAYER, player);
+		message.addParameter(Configuration.REASON, reason);
+		return message;
+	}
+	
+	public static Message createInvalidMove(Player player) {
+		Message message = new Message(Configuration.INVALID_MOVE);
+		message.addParameter(Configuration.PLAYER, player);
+		return message;
+	}
+	
+	public static Message createMove(Player player, Index position) {
+		Message message = new Message(Configuration.MOVE);
+		message.addParameter(Configuration.PLAYER, player);
+		message.addParameter(Configuration.INDEX, position);
+		return message;
+	}
+	
+	public static Message createConnectPlayer(Player player) {
+		Message message = new Message(Configuration.CONNECT);
+		message.addParameter(Configuration.PLAYER, player);
+		return message;
+	}
+	
+	public static Message createDisconnectPlayer(Player player) {
+		Message message = new Message(Configuration.DISCONNECT);
+		message.addParameter(Configuration.PLAYER, player);
+		return message;
+	}
+	
+	public static Message createInvalidCommand(int command) {
+		Message message = new Message(Configuration.INVALID_COMMAND);
+		message.addParameter(Configuration.COMMAND, command);
+		return message;
+	}
+}

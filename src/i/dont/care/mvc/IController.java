@@ -10,4 +10,6 @@ public interface IController {
 	void addPlayer(Player player);
 	
 	void removePlayer(Player player);
+	
+	void checkGame(Player player);
 }

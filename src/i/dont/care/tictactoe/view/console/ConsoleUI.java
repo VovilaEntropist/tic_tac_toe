@@ -1,6 +1,6 @@
 package i.dont.care.tictactoe.view.console;
 
-import i.dont.care.message.Message;
+import i.dont.care.clientserver.message.Message;
 import i.dont.care.mvc.IController;
 import i.dont.care.mvc.IView;
 import i.dont.care.tictactoe.model.Player;
@@ -13,15 +13,18 @@ import java.util.Scanner;
 
 public class ConsoleUI implements IView, Observer {
 	
-	private Player player;
 	private IController controller;
+	private Player player;
 	private Scanner scanner;
 	
-	public ConsoleUI(Player player) {
+	public ConsoleUI(IController controller, Player player) {
+		this.controller = controller;
 		this.scanner = new Scanner(System.in);
 		this.player = player;
-		
-		connect();
+	}
+	
+	public void start() {
+		connect(player);
 	}
 	
 	private void printBoard(CellArray board) {
@@ -35,17 +38,17 @@ public class ConsoleUI implements IView, Observer {
 	}
 	
 	@Override
-	public void doMove(Index index) {
+	public void doMove(Player player, Index index) {
 		controller.doMove(player, index);
 	}
 	
 	@Override
-	public void connect() {
+	public void connect(Player player) {
 		controller.addPlayer(player);
 	}
 	
 	@Override
-	public void disconnect() {
+	public void disconnect(Player player) {
 		controller.removePlayer(player);
 	}
 	
@@ -62,7 +65,7 @@ public class ConsoleUI implements IView, Observer {
 		
 		System.out.println("Выбите ход (1-9): ");
 		int num = scanner.nextInt();
-		doMove(getIndexByNumPad(num));
+		doMove(player, getIndexByNumPad(num));
 	}
 	
 	@Override
@@ -84,7 +87,7 @@ public class ConsoleUI implements IView, Observer {
 	
 	@Override
 	public void endGame() {
-		disconnect();
+		disconnect(player);
 	}
 	
 	@Override
@@ -96,8 +99,7 @@ public class ConsoleUI implements IView, Observer {
 	public void denyMove(Player targetPlayer) {
 		
 	}
-	
-	
+
 	@Override
 	public void update(Observable o, Object arg) {
 		//TODO Проверки и исключения тут сыпать

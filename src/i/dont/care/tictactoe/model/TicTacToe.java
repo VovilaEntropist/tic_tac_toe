@@ -1,7 +1,10 @@
 package i.dont.care.tictactoe.model;
 
-import i.dont.care.message.MessageFactory;
-import i.dont.care.mvc.IModel;
+import i.dont.care.clientserver.RequestProcessor;
+import i.dont.care.clientserver.message.Message;
+import i.dont.care.clientserver.message.MessageCollection;
+import i.dont.care.clientserver.message.MessageFactory;
+import i.dont.care.tictactoe.Configuration;
 import i.dont.care.tictactoe.model.logic.Step;
 import i.dont.care.tictactoe.model.logic.TicTacToeChecker;
 import i.dont.care.tictactoe.model.logic.TicTacToeNode;
@@ -10,8 +13,9 @@ import i.dont.care.tictactoe.model.board.Mark;
 import i.dont.care.utils.Index;
 
 import java.util.Observable;
+import java.util.Observer;
 
-public class TicTacToe extends Observable implements IModel {
+public class TicTacToe extends Observable implements RequestProcessor {
 	
 	public static final int ROW_COUNT = 3;
 	public static final int COLUMN_COUNT = 3;
@@ -27,115 +31,108 @@ public class TicTacToe extends Observable implements IModel {
 		currentBoard = new CellArray(ROW_COUNT, COLUMN_COUNT);
 	}
 	
-	@Override
-	public void doMove(Player player, Index index) {
+	public MessageCollection doMove(Player player, Index index) {
+		MessageCollection response = new MessageCollection();
+		
 		if (!currentBoard.isValidIndex(index)
 				&& currentBoard.at(index).getMark() != Mark.Empty) {
-			notifyInvalidMove(player);
-			return;
+			response.add(MessageFactory.createInvalidMove(player));
+			return response;
 		}
 		
 		Mark mark = player.getMark();
 
 		if (lastStep != null && mark != lastStep.getMark()) {
-			notifyInvalidMove(player);
+			response.add(MessageFactory.createInvalidMove(player));
+			return response;
 		} else {
 			lastStep = new Step(index, mark);
 		}
 		
 		currentBoard.set(index, mark);
-		notifyEndOfMove(player);
-		notifyBoardChanged(currentBoard);
+		response.add(MessageFactory.createEndMove(player));
+		response.add(MessageFactory.createBoardChanged(currentBoard));
 		
 		TicTacToeChecker checker = new TicTacToeChecker(mark, CHAIN_LENGTH);
 		if (checker.isDecision(new TicTacToeNode(currentBoard, new Step(index, mark)))) {
-			notifyPlayerWin(player);
-			notifyGameEnded();
+			response.add(MessageFactory.createPlayerWin(player));
+			response.add(MessageFactory.createGameEnded());
 		} else if (currentBoard.getEmptyCount() == 0) {
-			notifyPlayerWin(null);
-			notifyGameEnded();
+			response.add(MessageFactory.createTie());
+			response.add(MessageFactory.createGameEnded());
 		} else {
-			notifyPlayerGoes(players.getNext(player));
+			response.add(MessageFactory.createStartMove(players.getNext(player)));
 		}
+		
+		return response;
 	}
 	
-	@Override
-	public void addPlayer(Player player) {
+	public MessageCollection addPlayer(Player player) {
+		MessageCollection response = new MessageCollection();
+		
 		if (players.size() >= PLAYER_COUNT) {
-			notifyKickPlayer(player, "Игроков слишком много");
-			return;
+			response.add(MessageFactory.createKickPlayer(player, "Игроков слишком много"));
+			return response;
 		}
 		
 		if (players.isNameTaken(player)) {
-			notifyKickPlayer(player, "Такое имя уже используется");
-			return;
+			response.add(MessageFactory.createKickPlayer(player, "Такое имя уже используется"));
+			return response;
 		}
 		
 		if (players.isMarkTaken(player)) {
-			notifyKickPlayer(player, "Такая отметка уже используется");
-			return;
+			response.add(MessageFactory.createKickPlayer(player, "Такая отметка уже используется"));
+			return response;
 		}
 		
 		players.add(player);
 		
 		if (players.size() == PLAYER_COUNT) {
-			notifyGameStarted(currentBoard);
+			response.add(MessageFactory.createGameStarted(currentBoard));
 		}
+		
+		return response;
 	}
 	
-	@Override
-	public void removePlayer(Player player) {
+	public MessageCollection removePlayer(Player player) {
+		MessageCollection response = new MessageCollection();
+		
 		if (players.remove(player)) {
-			notifyGameEnded();
+			response.add(MessageFactory.createGameEnded());
 		}
+		
+		return response;
+	}
+	
+	private MessageCollection getState(Player player) {
+		return null;
 	}
 	
 	@Override
-	public void notifyGameStarted(CellArray board) {
-		this.setChanged();
-		this.notifyObservers(MessageFactory.createGameStarted(board));
-	}
-	
-	@Override
-	public void notifyEndOfMove(Player targetPlayer) {
-		this.setChanged();
-		this.notifyObservers(MessageFactory.createEndMove(targetPlayer));
-	}
-	
-	@Override
-	public void notifyPlayerGoes(Player targetPlayer) {
-		this.setChanged();
-		this.notifyObservers(MessageFactory.createStartMove(targetPlayer));
-	}
-	
-	@Override
-	public void notifyBoardChanged(CellArray board) {
-		this.setChanged();
-		this.notifyObservers(MessageFactory.createBoardChanged(board));
-	}
-	
-	@Override
-	public void notifyPlayerWin(Player winner) {
-		this.setChanged();
-		this.notifyObservers(MessageFactory.createPlayerWin(winner));
-	}
-	
-	@Override
-	public void notifyGameEnded() {
-		this.setChanged();
-		this.notifyObservers(MessageFactory.createGameEnded());
-	}
-	
-	@Override
-	public void notifyKickPlayer(Player targetPlayer, String reason) {
-		this.setChanged();
-		this.notifyObservers(MessageFactory.createKickPlayer(targetPlayer, reason));
-	}
-	
-	@Override
-	public void notifyInvalidMove(Player targetPlayer) {
-		this.setChanged();
-		this.notifyObservers(MessageFactory.createInvalidMove(targetPlayer));
-	}
+	public synchronized MessageCollection handleRequest(Message request) {
+		int command = request.getCommand();
+		
+		MessageCollection response;
+		
+		switch (command) {
+			case Configuration.CONNECT:
+				response = addPlayer((Player) request.getParameter(Configuration.PLAYER));
+				break;
+			case Configuration.DISCONNECT:
+				response = removePlayer((Player) request.getParameter(Configuration.PLAYER));
+				break;
+			case Configuration.MOVE:
+				response = doMove((Player) request.getParameter(Configuration.PLAYER),
+						(Index) request.getParameter(Configuration.INDEX));
+				break;
+			case Configuration.GET_STATE:
+				response = getState((Player) request.getParameter(Configuration.PLAYER));
+				break;
+			default:
+				response = new MessageCollection(MessageFactory.createInvalidCommand(command));
+				break;
+		}
 
+		return response;
+	}
 }

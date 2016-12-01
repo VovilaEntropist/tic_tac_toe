@@ -27,4 +27,9 @@ public class Controller implements IController {
 	public void removePlayer(Player player) {
 		model.removePlayer(player);
 	}
+	
+	@Override
+	public void checkGame(Player player) {
+		model.checkGame(player);
+	}
 }
