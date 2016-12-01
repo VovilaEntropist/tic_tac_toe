@@ -5,6 +5,7 @@ import i.dont.care.clientserver.message.Message;
 import i.dont.care.clientserver.message.MessageCollection;
 import i.dont.care.clientserver.message.MessageFactory;
 import i.dont.care.tictactoe.Configuration;
+import i.dont.care.tictactoe.GameStage;
 import i.dont.care.tictactoe.model.logic.Step;
 import i.dont.care.tictactoe.model.logic.TicTacToeChecker;
 import i.dont.care.tictactoe.model.logic.TicTacToeNode;
@@ -13,7 +14,6 @@ import i.dont.care.tictactoe.model.board.Mark;
 import i.dont.care.utils.Index;
 
 import java.util.Observable;
-import java.util.Observer;
 
 public class TicTacToe extends Observable implements RequestProcessor {
 	
@@ -25,14 +25,28 @@ public class TicTacToe extends Observable implements RequestProcessor {
 	private final CellArray currentBoard;
 	private Step lastStep;
 	private final PlayerCollection players;
+	private Player movingPlayer;
+	
+	private GameStage stage;
 	
 	public TicTacToe() {
+		stage = GameStage.Wait;
 		players = new PlayerCollection();
 		currentBoard = new CellArray(ROW_COUNT, COLUMN_COUNT);
 	}
 	
 	public MessageCollection doMove(Player player, Index index) {
 		MessageCollection response = new MessageCollection();
+		
+		if (!player.equals(movingPlayer)) {
+			response.add(MessageFactory.createInvalidMove(player));
+			return response;
+		}
+		
+		if (stage == GameStage.Wait) {
+			response.add(MessageFactory.createInvalidMove(player));
+			return response;
+		}
 		
 		if (!currentBoard.isValidIndex(index)
 				&& currentBoard.at(index).getMark() != Mark.Empty) {
@@ -51,21 +65,28 @@ public class TicTacToe extends Observable implements RequestProcessor {
 		
 		currentBoard.set(index, mark);
 		response.add(MessageFactory.createEndMove(player));
-		response.add(MessageFactory.createBoardChanged(currentBoard));
+		
+		Player nextPlayer = players.getNext(player);
+		
+		response.add(MessageFactory.createGameStateChanged(currentBoard, nextPlayer));
 		
 		TicTacToeChecker checker = new TicTacToeChecker(mark, CHAIN_LENGTH);
 		if (checker.isDecision(new TicTacToeNode(currentBoard, new Step(index, mark)))) {
+			stage = GameStage.Win;
 			response.add(MessageFactory.createPlayerWin(player));
 			response.add(MessageFactory.createGameEnded());
 		} else if (currentBoard.getEmptyCount() == 0) {
+			stage = GameStage.Tie;
 			response.add(MessageFactory.createTie());
 			response.add(MessageFactory.createGameEnded());
 		} else {
-			response.add(MessageFactory.createStartMove(players.getNext(player)));
+			movingPlayer = nextPlayer;
+			response.add(MessageFactory.createStartMove(nextPlayer));
 		}
 		
 		return response;
 	}
+	
 	
 	public MessageCollection addPlayer(Player player) {
 		MessageCollection response = new MessageCollection();
@@ -85,9 +106,15 @@ public class TicTacToe extends Observable implements RequestProcessor {
 			return response;
 		}
 		
+		if (stage != GameStage.Wait) {
+			response.add(MessageFactory.createKickPlayer(player, "Игра уже идёт или закончилась"));
+			return response;
+		}
+		
 		players.add(player);
 		
 		if (players.size() == PLAYER_COUNT) {
+			stage = GameStage.Active;
 			response.add(MessageFactory.createGameStarted(currentBoard));
 		}
 		
@@ -105,7 +132,22 @@ public class TicTacToe extends Observable implements RequestProcessor {
 	}
 	
 	private MessageCollection getState(Player player) {
-		return null;
+		MessageCollection response = new MessageCollection();
+		
+		response.add(MessageFactory.createGameStateChanged(currentBoard, movingPlayer));
+		
+		switch (stage) {
+			case Win:
+				response.add(MessageFactory.createPlayerWin(movingPlayer));
+				response.add(MessageFactory.createGameEnded());
+				break;
+			case Tie:
+				response.add(MessageFactory.createTie());
+				response.add(MessageFactory.createGameEnded());
+				break;
+		}
+		
+		return response;
 	}
 	
 	@Override
