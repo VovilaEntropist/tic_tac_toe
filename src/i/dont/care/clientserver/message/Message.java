@@ -31,4 +31,17 @@ public class Message implements Serializable {
 	public Object getParameter(String key) {
 		return parameters.get(key);
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("Com: ");
+		sb.append(command);
+		
+		parameters.forEach((key, value) ->
+				sb.append(String.format(", %s=%s", key, String.valueOf(value))));
+		
+		return sb.toString();
+	}
 }

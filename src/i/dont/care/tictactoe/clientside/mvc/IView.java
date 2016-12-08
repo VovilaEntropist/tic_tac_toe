@@ -5,11 +5,9 @@ import i.dont.care.utils.Index;
 
 public interface IView {
 	
-	void doMove(Player player, Index position);
+	void doMove(Index position);
 	
 	void connect(Player player);
 	
-	void disconnect(Player player);
-	
-	void checkGame(Player player);
+	void disconnect();
 }

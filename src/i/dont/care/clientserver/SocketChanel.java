@@ -53,10 +53,10 @@ public class SocketChanel {
 			result = inputStream.readObject();
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 		
-		return true;
+		return result;
 	}
 	
 	public void close() {

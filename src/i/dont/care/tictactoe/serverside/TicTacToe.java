@@ -48,20 +48,24 @@ public class TicTacToe extends Observable implements RequestProcessor {
 			return response;
 		}
 		
-		if (!currentBoard.isValidIndex(index)
-				&& currentBoard.at(index).getMark() != Mark.Empty) {
+		if (!currentBoard.isValidIndex(index)) {
+			response.add(MessageFactory.createInvalidMove(player));
+			return response;
+		}
+		
+		if (currentBoard.at(index).getMark() != Mark.Empty) {
 			response.add(MessageFactory.createInvalidMove(player));
 			return response;
 		}
 		
 		Mark mark = player.getMark();
 
-		if (lastStep != null && mark != lastStep.getMark()) {
+		if (lastStep != null && mark == lastStep.getMark()) {
 			response.add(MessageFactory.createInvalidMove(player));
 			return response;
-		} else {
-			lastStep = new Step(index, mark);
 		}
+		
+		lastStep = new Step(index, mark);
 		
 		currentBoard.set(index, mark);
 		response.add(MessageFactory.createEndMove(player));
@@ -81,7 +85,7 @@ public class TicTacToe extends Observable implements RequestProcessor {
 			response.add(MessageFactory.createGameEnded());
 		} else {
 			movingPlayer = nextPlayer;
-			response.add(MessageFactory.createStartMove(nextPlayer));
+			//response.add(MessageFactory.createStartMove(nextPlayer));
 		}
 		
 		return response;
@@ -115,10 +119,21 @@ public class TicTacToe extends Observable implements RequestProcessor {
 		
 		if (players.size() == PLAYER_COUNT) {
 			stage = GameStage.Active;
+			movingPlayer = defineMovingPlayer();
 			response.add(MessageFactory.createGameStarted(currentBoard));
 		}
 		
 		return response;
+	}
+	
+	private Player defineMovingPlayer() {
+		for (Player player : players) {
+			if (player.getMark() == Mark.Player1) {
+				return player;
+			}
+		}
+		
+		return players.get(0);
 	}
 	
 	public MessageCollection removePlayer(Player player) {
@@ -133,6 +148,8 @@ public class TicTacToe extends Observable implements RequestProcessor {
 	
 	private MessageCollection getState(Player player) {
 		MessageCollection response = new MessageCollection();
+		
+		
 		
 		response.add(MessageFactory.createGameStateChanged(currentBoard, movingPlayer));
 		

@@ -14,8 +14,8 @@ public class Controller implements IController {
 	}
 	
 	@Override
-	public void doMove(Player player, Index position) {
-		model.doMove(player, position);
+	public void doMove(Index position) {
+		model.doMove(position);
 	}
 	
 	@Override
@@ -24,12 +24,7 @@ public class Controller implements IController {
 	}
 	
 	@Override
-	public void removePlayer(Player player) {
-		model.removePlayer(player);
-	}
-	
-	@Override
-	public void checkGame(Player player) {
-		model.checkGame(player);
+	public void removePlayer() {
+		model.removePlayer();
 	}
 }

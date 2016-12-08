@@ -1,6 +1,8 @@
 package i.dont.care.tictactoe.serverside.board;
 
-public class Cell {
+import java.io.Serializable;
+
+public class Cell implements Serializable {
 	
 	private Mark mark;
 	
@@ -18,6 +20,21 @@ public class Cell {
 	
 	public void setMark(Mark mark) {
 		this.mark = mark;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		
+		Cell cell = (Cell) o;
+		
+		return mark == cell.mark;
+	}
+	
+	@Override
+	public int hashCode() {
+		return mark != null ? mark.hashCode() : 0;
 	}
 	
 	@Override

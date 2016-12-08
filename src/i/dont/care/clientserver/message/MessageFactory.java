@@ -28,6 +28,7 @@ public class MessageFactory {
 	public static Message createGameStateChanged(CellArray board, Player movingPlayer) {
 		Message message = new Message(Configuration.BOARD_CHANGED);
 		message.addParameter(Configuration.BOARD, board);
+		message.addParameter(Configuration.PLAYER, movingPlayer);
 		return message;
 	}
 	

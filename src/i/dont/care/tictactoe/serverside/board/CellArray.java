@@ -4,9 +4,11 @@ import i.dont.care.utils.Copyable;
 import i.dont.care.utils.Index;
 import i.dont.care.utils.wrappers.IntWrapper;
 
+import java.io.Serializable;
+import java.util.Arrays;
 import java.util.function.BiConsumer;
 
-public class CellArray implements Copyable<CellArray> {
+public class CellArray implements Copyable<CellArray>, Serializable {
 	
 	private Cell[][] cells;
 	
@@ -91,6 +93,21 @@ public class CellArray implements Copyable<CellArray> {
 	
 	public boolean isEmpty() {
 		return getEmptyCount() == getRows() * getColumns();
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		
+		CellArray cellArray = (CellArray) o;
+		
+		return Arrays.deepEquals(cells, cellArray.cells);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Arrays.deepHashCode(cells);
 	}
 	
 	@Override

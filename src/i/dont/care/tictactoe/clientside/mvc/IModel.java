@@ -4,6 +4,8 @@ import i.dont.care.tictactoe.serverside.Player;
 import i.dont.care.tictactoe.serverside.board.CellArray;
 import i.dont.care.utils.Index;
 
+import java.util.Observer;
+
 public interface IModel {
 	
 	void doMove(Index position);
@@ -47,5 +49,7 @@ public interface IModel {
 	default void notifyGameEnded() {
 		
 	}
+	
+	void addViewObserver(Observer observer);
 	
 }

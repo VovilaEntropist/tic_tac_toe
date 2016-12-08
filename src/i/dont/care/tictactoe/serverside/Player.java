@@ -2,7 +2,9 @@ package i.dont.care.tictactoe.serverside;
 
 import i.dont.care.tictactoe.serverside.board.Mark;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
 	private String nickname;
 	private Mark mark;
 	private boolean ai;
@@ -43,5 +45,10 @@ public class Player {
 		result = 31 * result + (mark != null ? mark.hashCode() : 0);
 		result = 31 * result + (ai ? 1 : 0);
 		return result;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Player: %s, %s", nickname, String.valueOf(mark.getChar()));
 	}
 }

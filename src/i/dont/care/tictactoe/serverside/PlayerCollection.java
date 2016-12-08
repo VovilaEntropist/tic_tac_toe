@@ -34,4 +34,6 @@ public class PlayerCollection extends ArrayList<Player> {
 		//TODO Возможно тут лучше бахнуть эксепшн
 		return null;
 	}
+	
+	
 }

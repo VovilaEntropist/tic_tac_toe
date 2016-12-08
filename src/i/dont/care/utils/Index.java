@@ -1,6 +1,8 @@
 package i.dont.care.utils;
 
-public class Index {
+import java.io.Serializable;
+
+public class Index implements Serializable {
 	
 	private int row;
 	private int column;

@@ -1,6 +1,8 @@
 package i.dont.care.tictactoe.serverside.board;
 
-public enum Mark {
+import java.io.Serializable;
+
+public enum Mark implements Serializable {
 	Empty('_'),
 	Player1('X'),
 	Player2('0');

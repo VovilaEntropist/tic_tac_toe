@@ -11,6 +11,7 @@ import i.dont.care.tictactoe.serverside.board.CellArray;
 import i.dont.care.utils.Index;
 
 import java.util.Observable;
+import java.util.Observer;
 
 public class Model extends Observable implements IModel {
 	
@@ -19,8 +20,11 @@ public class Model extends Observable implements IModel {
 	
 	private Player player;
 	private CellArray board;
+	private Player movingPlayer;
 	private boolean exit = false;
 	private Client client;
+	private boolean currentPlayerGoes;
+	
 	
 	public Model(Client client) {
 		this.client = client;
@@ -62,19 +66,60 @@ public class Model extends Observable implements IModel {
 		exit = true;
 	}
 	
+	@Override
+	public void addViewObserver(Observer observer) {
+		addObserver(observer);
+	}
+	
 	private void handleResponse(MessageCollection response) {
 		for (Message message : response) {
 			
 			switch (message.getCommand()) {
 				case Configuration.BOARD_CHANGED:
 					CellArray board = (CellArray) message.getParameter(Configuration.BOARD);
-					if (this.board == null) {
-						this.board = new CellArray(ROWS, CELLS);
+					Player movingPlayer = (Player) message.getParameter(Configuration.PLAYER);
+					
+					if (movingPlayer != null) {
+						if (player.equals(movingPlayer)) {
+							if (!currentPlayerGoes) {
+								currentPlayerGoes = true;
+								setChanged();
+								notifyObservers(MessageFactory.createStartMove(player));
+							}
+						} else {
+							currentPlayerGoes = false;
+							
+							boolean movingPlayerChanged = !movingPlayer.equals(this.movingPlayer);
+							boolean boardChanged = !board.equals(this.board);
+							
+							if (movingPlayerChanged) {
+								this.movingPlayer = movingPlayer;
+							}
+							
+							if (boardChanged) {
+								this.board = board.copy();
+							}
+							
+							if (boardChanged) {
+								setChanged();
+								notifyObservers(message);
+							}
+						}
 					}
 					
-					if (!this.board.equals(board)) {
-						this.board = board.copy();
+					break;
+				case Configuration.INVALID_MOVE:
+					if (currentPlayerGoes) {
+						setChanged();
+						notifyObservers(MessageFactory.createStartMove(player));
 					}
+					setChanged();
+					notifyObservers(message);
+					break;
+				case Configuration.END_OF_MOVE:
+					currentPlayerGoes = false;
+					setChanged();
+					notifyObservers(message);
 					break;
 				case Configuration.GAME_ENDED:
 					exit = true;

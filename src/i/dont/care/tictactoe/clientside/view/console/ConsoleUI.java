@@ -6,6 +6,7 @@ import i.dont.care.tictactoe.clientside.mvc.IController;
 import i.dont.care.tictactoe.clientside.mvc.IView;
 import i.dont.care.tictactoe.serverside.Player;
 import i.dont.care.tictactoe.serverside.board.CellArray;
+import i.dont.care.tictactoe.serverside.board.Mark;
 import i.dont.care.utils.Index;
 
 import java.util.Observable;
@@ -22,6 +23,16 @@ public class ConsoleUI implements IView, Observer {
 		this.scanner = new Scanner(System.in);
 	}
 	
+	public void printName() {
+		System.out.println("Введите имя\n");
+		String name = scanner.nextLine();
+		System.out.println("Выберите фигуру\n");
+		String mark = scanner.nextLine();
+		
+		connect(new Player(name, mark.charAt(0) == 'X' ? Mark.Player1 : Mark.Player2,  false));
+		
+	}
+	
 	private void printBoard(CellArray board) {
 		System.out.println(board + "\n");
 	}
@@ -33,8 +44,8 @@ public class ConsoleUI implements IView, Observer {
 	}
 	
 	@Override
-	public void doMove(Player player, Index index) {
-		controller.doMove(player, index);
+	public void doMove(Index index) {
+		controller.doMove(index);
 	}
 	
 	@Override
@@ -43,33 +54,23 @@ public class ConsoleUI implements IView, Observer {
 	}
 	
 	@Override
-	public void disconnect(Player player) {
-		controller.removePlayer(player);
+	public void disconnect() {
+		controller.removePlayer();
 	}
-	
-	@Override
-	public void checkGame(Player player) {
-		controller.checkGame(player);
-	}
-	
+		
 	public void startGame(CellArray board) {
-		printBoard(board);
+		System.out.println("Игра началась\n");
+		//printBoard(board);
 	}
-//
-//	public void prepareMove(Player targetPlayer) {
-//		if (!player.equals(targetPlayer)) {
-//			return;
-//		}
-//
-//		System.out.println("Выбите ход (1-9): ");
-//		int num = scanner.nextInt();
-//		doMove(player, getIndexByNumPad(num));
-//	}
+
+	public void prepareMove(Player player) {
+		System.out.println("Выбите ход (1-9): ");
+		int num = scanner.nextInt();
+		doMove(getIndexByNumPad(num));
+	}
 	
-	public void endMove(Player targetPlayer) {
-//		if (!player.equals(targetPlayer)) {
-//			return;
-//		}
+	public void endMove(Player player) {
+		System.out.println("Ход принят" + "\n");
 	}
 	
 	public void updateBoard(CellArray board) {
@@ -77,21 +78,31 @@ public class ConsoleUI implements IView, Observer {
 	}
 	
 	public void winPlayer(Player winner) {
-		System.out.println("Выиграл " + winner.getNickname());
+		System.out.println("Выиграл " + winner.getNickname()+  "\n");
 	}
 	
-//	public void endGame() {
-//		disconnect(player);
-//	}
-	
-	public void kickPlayer(Player targetPlayer, String reason) {
-		
+	public void endGame() {
+		System.out.println("Игра закончена\n");
+		disconnect();
 	}
 	
-	public void denyMove(Player targetPlayer) {
-		
+	public void kickPlayer(Player player, String reason) {
+		System.out.println("Отказ доступа: " + reason + "\n");
 	}
-
+	
+	public void denyMove(Player player) {
+		System.out.println("Ошибка хода");
+		//prepareMove(player);
+	}
+	
+	private void denyCommand() {
+		System.out.println("Неверная комманда\n");
+	}
+	
+	private void endGameTie() {
+		System.out.println("Ничья\n");
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		//TODO Проверки и исключения тут сыпать
@@ -111,7 +122,7 @@ public class ConsoleUI implements IView, Observer {
 				endMove(player);
 				break;
 			case Configuration.START_OF_MOVE:
-				//prepareMove(player);
+				prepareMove(player);
 				break;
 			case Configuration.BOARD_CHANGED:
 				updateBoard(board);
@@ -120,7 +131,7 @@ public class ConsoleUI implements IView, Observer {
 				winPlayer(player);
 				break;
 			case Configuration.GAME_ENDED:
-				//endGame();
+				endGame();
 				break;
 			case Configuration.KICK_PLAYER:
 				kickPlayer(player, reason);
@@ -128,6 +139,14 @@ public class ConsoleUI implements IView, Observer {
 			case Configuration.INVALID_MOVE:
 				denyMove(player);
 				break;
+			case Configuration.INVALID_COMMAND:
+				denyCommand();
+				break;
+			case Configuration.TIE:
+				endGameTie();
+				break;
 		}
 	}
+	
+	
 }

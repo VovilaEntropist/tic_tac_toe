@@ -28,7 +28,7 @@ public class Client {
 			return null; //TODO возврат сообщения о невозможности подключиться
 		}
 		
-		if (chanel.create()) {
+		if (!chanel.create()) {
 			return null; //TODO
 		}
 		
