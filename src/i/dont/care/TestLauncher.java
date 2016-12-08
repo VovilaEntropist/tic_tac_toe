@@ -1,15 +1,15 @@
 package i.dont.care;
 
 import i.dont.care.client.Client;
-import i.dont.care.mvc.IController;
-import i.dont.care.mvc.IModel;
-import i.dont.care.mvc.IView;
+import i.dont.care.tictactoe.clientside.mvc.IController;
+import i.dont.care.tictactoe.clientside.mvc.IModel;
+import i.dont.care.tictactoe.clientside.mvc.IView;
 import i.dont.care.clientserver.Server;
-import i.dont.care.tictactoe.controller.Controller;
-import i.dont.care.tictactoe.model.Player;
-import i.dont.care.tictactoe.model.TicTacToe;
-import i.dont.care.tictactoe.model.board.Mark;
-import i.dont.care.tictactoe.view.console.ConsoleUI;
+import i.dont.care.tictactoe.clientside.controller.Controller;
+import i.dont.care.tictactoe.serverside.Player;
+import i.dont.care.tictactoe.serverside.TicTacToe;
+import i.dont.care.tictactoe.serverside.board.Mark;
+import i.dont.care.tictactoe.clientside.view.console.ConsoleUI;
 
 public class TestLauncher {
 	

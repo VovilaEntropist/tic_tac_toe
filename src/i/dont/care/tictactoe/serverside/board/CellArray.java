@@ -1,4 +1,4 @@
-package i.dont.care.tictactoe.model.board;
+package i.dont.care.tictactoe.serverside.board;
 
 import i.dont.care.utils.Copyable;
 import i.dont.care.utils.Index;

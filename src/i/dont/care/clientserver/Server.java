@@ -1,18 +1,16 @@
 package i.dont.care.clientserver;
 
-import i.dont.care.mvc.IModel;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server extends Thread {
 	
-	private IModel model;
+	private RequestProcessor processor;
 	private int port;
 	
-	public Server(IModel model, int port) {
-		this.model = model;
+	public Server(RequestProcessor processor, int port) {
+		this.processor = processor;
 		this.port = port;
 	}
 	
@@ -27,7 +25,7 @@ public class Server extends Thread {
 				client = serverSocket.accept();
 			}
 			
-			new RequestReceiver(model, client, chanel).start();
+			new RequestReceiver(processor, new SocketChanel(client)).start();
 		}
 			
 		} catch (IOException e) {

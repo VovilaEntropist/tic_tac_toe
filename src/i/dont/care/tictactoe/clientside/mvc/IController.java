@@ -1,6 +1,6 @@
-package i.dont.care.mvc;
+package i.dont.care.tictactoe.clientside.mvc;
 
-import i.dont.care.tictactoe.model.Player;
+import i.dont.care.tictactoe.serverside.Player;
 import i.dont.care.utils.Index;
 
 public interface IController {

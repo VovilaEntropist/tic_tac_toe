@@ -1,8 +1,9 @@
 package i.dont.care.clientserver;
 
+import i.dont.care.clientserver.message.Message;
 import i.dont.care.clientserver.message.MessageCollection;
 import i.dont.care.clientserver.message.MessageFactory;
-import i.dont.care.tictactoe.model.Player;
+import i.dont.care.tictactoe.serverside.Player;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -53,6 +54,9 @@ public class Client {
 		return (MessageCollection) response;
 	}
 	
+	public MessageCollection request(Message message) {
+		return request(new MessageCollection(message));
+	}
 	
 	
 }

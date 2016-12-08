@@ -1,4 +1,4 @@
-package i.dont.care.tictactoe.view.swing;
+package i.dont.care.tictactoe.clientside.view.swing;
 
 import javax.swing.*;
 import java.awt.*;

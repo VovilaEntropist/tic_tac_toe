@@ -1,6 +1,6 @@
-package i.dont.care.tictactoe.model;
+package i.dont.care.tictactoe.serverside;
 
-import i.dont.care.tictactoe.model.board.Mark;
+import i.dont.care.tictactoe.serverside.board.Mark;
 
 public class Player {
 	private String nickname;

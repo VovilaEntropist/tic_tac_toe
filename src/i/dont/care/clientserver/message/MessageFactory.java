@@ -1,8 +1,8 @@
 package i.dont.care.clientserver.message;
 
 import i.dont.care.tictactoe.Configuration;
-import i.dont.care.tictactoe.model.Player;
-import i.dont.care.tictactoe.model.board.CellArray;
+import i.dont.care.tictactoe.serverside.Player;
+import i.dont.care.tictactoe.serverside.board.CellArray;
 import i.dont.care.utils.Index;
 
 public class MessageFactory {
@@ -75,6 +75,12 @@ public class MessageFactory {
 	
 	public static Message createDisconnectPlayer(Player player) {
 		Message message = new Message(Configuration.DISCONNECT);
+		message.addParameter(Configuration.PLAYER, player);
+		return message;
+	}
+	
+	public static Message createGetGameState(Player player) {
+		Message message = new Message(Configuration.GET_STATE);
 		message.addParameter(Configuration.PLAYER, player);
 		return message;
 	}

@@ -1,4 +1,4 @@
-package i.dont.care.tictactoe.model;
+package i.dont.care.tictactoe.serverside;
 
 import java.util.ArrayList;
 

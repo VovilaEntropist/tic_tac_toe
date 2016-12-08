@@ -1,4 +1,4 @@
-package i.dont.care.tictactoe.model.board;
+package i.dont.care.tictactoe.serverside.board;
 
 public enum Mark {
 	Empty('_'),

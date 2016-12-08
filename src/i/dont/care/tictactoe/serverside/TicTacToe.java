@@ -1,4 +1,4 @@
-package i.dont.care.tictactoe.model;
+package i.dont.care.tictactoe.serverside;
 
 import i.dont.care.clientserver.RequestProcessor;
 import i.dont.care.clientserver.message.Message;
@@ -6,11 +6,11 @@ import i.dont.care.clientserver.message.MessageCollection;
 import i.dont.care.clientserver.message.MessageFactory;
 import i.dont.care.tictactoe.Configuration;
 import i.dont.care.tictactoe.GameStage;
-import i.dont.care.tictactoe.model.logic.Step;
-import i.dont.care.tictactoe.model.logic.TicTacToeChecker;
-import i.dont.care.tictactoe.model.logic.TicTacToeNode;
-import i.dont.care.tictactoe.model.board.CellArray;
-import i.dont.care.tictactoe.model.board.Mark;
+import i.dont.care.tictactoe.serverside.logic.TicTacToeChecker;
+import i.dont.care.tictactoe.serverside.logic.Step;
+import i.dont.care.tictactoe.serverside.logic.TicTacToeNode;
+import i.dont.care.tictactoe.serverside.board.CellArray;
+import i.dont.care.tictactoe.serverside.board.Mark;
 import i.dont.care.utils.Index;
 
 import java.util.Observable;

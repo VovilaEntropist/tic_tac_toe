@@ -1,6 +1,6 @@
-package i.dont.care.tictactoe.model.logic;
+package i.dont.care.tictactoe.serverside.logic;
 
-import i.dont.care.tictactoe.model.board.Mark;
+import i.dont.care.tictactoe.serverside.board.Mark;
 import i.dont.care.utils.Index;
 
 public class Step {
