@@ -10,10 +10,14 @@ public interface IModel {
 	
 	void doMove(Index position);
 	
-	void addPlayer(Player player);
+	void addPlayer(Player player, String ip, int port);
 	
 	void removePlayer();
-		
+	
+	void startServer(int port);
+	
+	void stopServer();
+	
 	default void notifyGameStarted(CellArray cellArray) {
 		
 	}

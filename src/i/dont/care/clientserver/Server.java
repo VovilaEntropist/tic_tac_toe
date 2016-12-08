@@ -9,6 +9,8 @@ public class Server extends Thread {
 	private RequestProcessor processor;
 	private int port;
 	
+	private boolean exit = false;
+	
 	public Server(RequestProcessor processor, int port) {
 		this.processor = processor;
 		this.port = port;
@@ -19,7 +21,7 @@ public class Server extends Thread {
 		try {
 		ServerSocket serverSocket = new ServerSocket(port);
 		
-		while(true) {
+		while(!exit) {
 			Socket client = null;
 			while (client == null) {
 				client = serverSocket.accept();
@@ -34,5 +36,7 @@ public class Server extends Thread {
 		}
 	}
 	
-	
+	public void stopServer() {
+		exit = true;
+	}
 }

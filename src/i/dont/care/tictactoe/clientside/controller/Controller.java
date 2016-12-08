@@ -19,12 +19,22 @@ public class Controller implements IController {
 	}
 	
 	@Override
-	public void addPlayer(Player player) {
-		model.addPlayer(player);
+	public void addPlayer(Player player, String ip, int port) {
+		model.addPlayer(player, ip, port);
 	}
 	
 	@Override
 	public void removePlayer() {
 		model.removePlayer();
+	}
+	
+	@Override
+	public void startServer(int port) {
+		model.startServer(port);
+	}
+	
+	@Override
+	public void stopServer() {
+		model.stopServer();
 	}
 }

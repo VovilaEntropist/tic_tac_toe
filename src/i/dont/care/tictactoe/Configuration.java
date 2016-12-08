@@ -26,4 +26,5 @@ public class Configuration {
 	public static final String COMMAND = "command";
 	
 	public static final int CONNECTION_ERROR = -1;
+	public static final int GAME_STOP = -2;
 }

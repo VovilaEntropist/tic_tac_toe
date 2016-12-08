@@ -7,7 +7,11 @@ public interface IView {
 	
 	void doMove(Index position);
 	
-	void connect(Player player);
+	void connect(Player player, String ip, int port);
 	
 	void disconnect();
+	
+	void startServer(int port);
+	
+	void stopServer();
 }

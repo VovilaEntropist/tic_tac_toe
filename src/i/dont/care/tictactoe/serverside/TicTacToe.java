@@ -21,7 +21,7 @@ public class TicTacToe extends Observable implements RequestProcessor {
 	public static final int COLUMN_COUNT = 3;
 	private static final int PLAYER_COUNT = 2;
 	private static final int CHAIN_LENGTH = 3;
-	
+
 	private final CellArray currentBoard;
 	private Step lastStep;
 	private final PlayerCollection players;
@@ -77,11 +77,11 @@ public class TicTacToe extends Observable implements RequestProcessor {
 		TicTacToeChecker checker = new TicTacToeChecker(mark, CHAIN_LENGTH);
 		if (checker.isDecision(new TicTacToeNode(currentBoard, new Step(index, mark)))) {
 			stage = GameStage.Win;
-			response.add(MessageFactory.createPlayerWin(player));
+			//response.add(MessageFactory.createPlayerWin(player));
 			response.add(MessageFactory.createGameEnded());
 		} else if (currentBoard.getEmptyCount() == 0) {
 			stage = GameStage.Tie;
-			response.add(MessageFactory.createTie());
+			//response.add(MessageFactory.createTie());
 			response.add(MessageFactory.createGameEnded());
 		} else {
 			movingPlayer = nextPlayer;

@@ -98,4 +98,8 @@ public class MessageFactory {
 		return message;
 	}
 	
+	public static Message createGameStop() {
+		Message message = new Message(Configuration.GAME_STOP);
+		return message;
+	}
 }

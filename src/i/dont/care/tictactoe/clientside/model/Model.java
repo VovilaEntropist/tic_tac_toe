@@ -1,12 +1,15 @@
 package i.dont.care.tictactoe.clientside.model;
 
 import i.dont.care.clientserver.Client;
+import i.dont.care.clientserver.RequestProcessor;
+import i.dont.care.clientserver.Server;
 import i.dont.care.clientserver.message.Message;
 import i.dont.care.clientserver.message.MessageCollection;
 import i.dont.care.clientserver.message.MessageFactory;
 import i.dont.care.tictactoe.Configuration;
 import i.dont.care.tictactoe.clientside.mvc.IModel;
 import i.dont.care.tictactoe.serverside.Player;
+import i.dont.care.tictactoe.serverside.TicTacToe;
 import i.dont.care.tictactoe.serverside.board.CellArray;
 import i.dont.care.utils.Index;
 
@@ -22,10 +25,7 @@ public class Model extends Observable implements IModel {
 	private Client client;
 	private boolean currentPlayerGoes;
 	
-	
-	public Model(Client client) {
-		this.client = client;
-	}
+	private Server server;
 	
 	public void start() {
 		new Thread(() -> {
@@ -51,8 +51,10 @@ public class Model extends Observable implements IModel {
 	}
 	
 	@Override
-	public void addPlayer(Player player) {
+	public void addPlayer(Player player, String ip, int port) {
 		this.player = player;
+		this.client = new Client(ip, port);
+		
 		handleResponse(client.connect(player));
 		start();
 	}
@@ -61,6 +63,19 @@ public class Model extends Observable implements IModel {
 	public void removePlayer() {
 		handleResponse(client.disconect(player));
 		exit = true;
+	}
+	
+	@Override
+	public void startServer(int port) {
+		server = new Server(new TicTacToe(), port);
+		server.start();
+	}
+	
+	@Override
+	public void stopServer() {
+		if (server != null) {
+			server.stopServer();
+		}
 	}
 	
 	@Override
@@ -120,6 +135,10 @@ public class Model extends Observable implements IModel {
 					break;
 				case Configuration.CONNECTION_ERROR:
 				case Configuration.GAME_ENDED:
+					if (server != null) {
+						server.stopServer();
+					}
+					
 					exit = true;
 				default:
 					setChanged();

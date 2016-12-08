@@ -29,8 +29,7 @@ public class ConsoleUI implements IView, Observer {
 		System.out.println("Выберите фигуру\n");
 		String mark = scanner.nextLine();
 		
-		connect(new Player(name, mark.charAt(0) == 'X' ? Mark.Player1 : Mark.Player2,  false));
-		
+		connect(new Player(name, mark.charAt(0) == 'X' ? Mark.Player1 : Mark.Player2,  false), "localhost", 6660);
 	}
 	
 	private void printBoard(CellArray board) {
@@ -49,15 +48,25 @@ public class ConsoleUI implements IView, Observer {
 	}
 	
 	@Override
-	public void connect(Player player) {
-		controller.addPlayer(player);
+	public void connect(Player player, String ip, int port) {
+		controller.addPlayer(player, ip, port);
 	}
 	
 	@Override
 	public void disconnect() {
 		controller.removePlayer();
 	}
-		
+	
+	@Override
+	public void startServer(int port) {
+		controller.startServer(port);
+	}
+	
+	@Override
+	public void stopServer() {
+		controller.stopServer();
+	}
+	
 	public void startGame(CellArray board) {
 		System.out.println("Игра началась\n");
 		//printBoard(board);
