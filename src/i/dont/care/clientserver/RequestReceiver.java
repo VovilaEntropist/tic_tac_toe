@@ -7,16 +7,19 @@ public class RequestReceiver extends Thread {
 	
 	private RequestProcessor processor;
 	private SocketChanel chanel;
+	private boolean connected = false;
 	
 	public RequestReceiver(RequestProcessor processor, SocketChanel chanel) {
 		this.processor = processor;
 		this.chanel = chanel;
-		chanel.create();
+		if (chanel.create()) {
+			connected = true;
+		}
 	}
 	
 	@Override
 	public void run() {
-		while (true) {
+		while (connected) {
 			MessageCollection request = null;
 			
 			request = (MessageCollection) chanel.read();
@@ -31,7 +34,12 @@ public class RequestReceiver extends Thread {
 	
 	private void handleRequest(MessageCollection requests) {
 		for (Message request : requests) {
-			chanel.write(processor.handleRequest(request));
+			
+			if (!chanel.write(processor.handleRequest(request))) {
+				chanel.close();
+				connected = false;
+				break;
+			}
 		}
 	}
 }

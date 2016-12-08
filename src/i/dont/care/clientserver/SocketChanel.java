@@ -20,7 +20,6 @@ public class SocketChanel {
 			outputStream = new ObjectOutputStream(socket.getOutputStream());
 			inputStream = new ObjectInputStream(socket.getInputStream());
 		} catch (IOException e) {
-			e.printStackTrace();
 			return false;
 		}
 		
@@ -33,9 +32,9 @@ public class SocketChanel {
 		}
 		
 		try {
+			outputStream.reset();
 			outputStream.writeObject(object);
 		} catch (IOException e) {
-			e.printStackTrace();
 			return false;
 		}
 		
@@ -52,7 +51,6 @@ public class SocketChanel {
 		try {
 			result = inputStream.readObject();
 		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
 			return null;
 		}
 		

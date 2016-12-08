@@ -145,6 +145,10 @@ public class ConsoleUI implements IView, Observer {
 			case Configuration.TIE:
 				endGameTie();
 				break;
+			case Configuration.CONNECTION_ERROR:
+				//disconnect();
+				System.out.println("Ошибка подключения: " + reason);
+				break;
 		}
 	}
 	

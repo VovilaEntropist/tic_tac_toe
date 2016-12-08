@@ -6,9 +6,9 @@ public class Cell implements Serializable {
 	
 	private Mark mark;
 	
-	public Cell() {
-		this.mark = Mark.Empty;
-	}
+//	public Cell() {
+//		this.mark = Mark.Empty;
+//	}
 	
 	public Cell(Mark mark) {
 		this.mark = mark;

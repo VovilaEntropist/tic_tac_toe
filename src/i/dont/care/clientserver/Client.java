@@ -24,12 +24,11 @@ public class Client {
 		try {
 			chanel = new SocketChanel(new Socket(ip, port));
 		} catch (IOException e) {
-			e.printStackTrace();
-			return null; //TODO возврат сообщения о невозможности подключиться
+			return new MessageCollection(MessageFactory.createConnectionError("Ошибка подключения"));
 		}
 		
 		if (!chanel.create()) {
-			return null; //TODO
+			return new MessageCollection(MessageFactory.createConnectionError("Не удалось создать связь с сервером."));
 		}
 		
 		return request(new MessageCollection(MessageFactory.createConnectPlayer(player)));
@@ -40,15 +39,18 @@ public class Client {
 	}
 	
 	public MessageCollection request(MessageCollection messages) {
-		chanel.write(messages);
+		if (!chanel.write(messages)) {
+			//chanel.close();
+			return new MessageCollection(MessageFactory.createConnectionError("Ошибка отправки запроса"));
+		}
 		Object response = chanel.read();
 		
 		if (response == null) {
-			return null; //TODO
+			return null;
 		}
 		
 		if (!(response instanceof MessageCollection)) {
-			return null; //TODO
+			return null;
 		}
 		
 		return (MessageCollection) response;

@@ -1,6 +1,5 @@
 package i.dont.care.tictactoe.serverside.board;
 
-import i.dont.care.utils.Copyable;
 import i.dont.care.utils.Index;
 import i.dont.care.utils.wrappers.IntWrapper;
 
@@ -8,12 +7,14 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.function.BiConsumer;
 
-public class CellArray implements Copyable<CellArray>, Serializable {
+public class CellArray implements Serializable {
 	
 	private Cell[][] cells;
+	private char test;
 	
 	public CellArray(int rows, int columns) {
 		initArray(rows, columns);
+		test =  '2';
 	}
 	
 	private void initArray(int rows, int columns) {
@@ -21,10 +22,11 @@ public class CellArray implements Copyable<CellArray>, Serializable {
 		for (int i = 0; i < rows; i++) {
 			cells[i] = new Cell[columns];
 			for (int j = 0; j < columns; j++) {
-				cells[i][j] = new Cell();
+				cells[i][j] = new Cell(Mark.Empty);
 			}
 		}
 	}
+	
 	
 	public CellArray copy() {
 		CellArray cellArray = new CellArray(getRows(), getColumns());
@@ -67,6 +69,7 @@ public class CellArray implements Copyable<CellArray>, Serializable {
 	
 	public void set(Index index, Mark mark) {
 		set(index.row(), index.column(), mark);
+		test = mark.getChar();
 	}
 	
 	public void forEach(BiConsumer<Index, Cell> c) {
@@ -120,6 +123,7 @@ public class CellArray implements Copyable<CellArray>, Serializable {
 			}
 			sb.append("\n");
 		}
+		sb.append(test);
 		
 		return sb.toString();
 	}

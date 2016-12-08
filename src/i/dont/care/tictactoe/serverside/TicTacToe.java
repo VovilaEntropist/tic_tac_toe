@@ -149,8 +149,6 @@ public class TicTacToe extends Observable implements RequestProcessor {
 	private MessageCollection getState(Player player) {
 		MessageCollection response = new MessageCollection();
 		
-		
-		
 		response.add(MessageFactory.createGameStateChanged(currentBoard, movingPlayer));
 		
 		switch (stage) {

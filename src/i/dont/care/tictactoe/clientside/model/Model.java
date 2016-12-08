@@ -15,9 +15,6 @@ import java.util.Observer;
 
 public class Model extends Observable implements IModel {
 	
-	public static final int CELLS = 3;
-	public static final int ROWS = 3;
-	
 	private Player player;
 	private CellArray board;
 	private Player movingPlayer;
@@ -121,6 +118,7 @@ public class Model extends Observable implements IModel {
 					setChanged();
 					notifyObservers(message);
 					break;
+				case Configuration.CONNECTION_ERROR:
 				case Configuration.GAME_ENDED:
 					exit = true;
 				default:

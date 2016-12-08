@@ -91,4 +91,11 @@ public class MessageFactory {
 		message.addParameter(Configuration.COMMAND, command);
 		return message;
 	}
+	
+	public static Message createConnectionError(String text) {
+		Message message = new Message(Configuration.CONNECTION_ERROR);
+		message.addParameter(Configuration.REASON, text);
+		return message;
+	}
+	
 }

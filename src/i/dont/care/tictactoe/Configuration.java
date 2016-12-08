@@ -25,4 +25,5 @@ public class Configuration {
 	public static final String INDEX = "index";
 	public static final String COMMAND = "command";
 	
+	public static final int CONNECTION_ERROR = -1;
 }
