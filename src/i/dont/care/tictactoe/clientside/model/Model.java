@@ -1,7 +1,6 @@
 package i.dont.care.tictactoe.clientside.model;
 
 import i.dont.care.clientserver.Client;
-import i.dont.care.clientserver.RequestProcessor;
 import i.dont.care.clientserver.Server;
 import i.dont.care.clientserver.message.Message;
 import i.dont.care.clientserver.message.MessageCollection;

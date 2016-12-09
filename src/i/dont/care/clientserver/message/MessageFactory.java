@@ -2,14 +2,17 @@ package i.dont.care.clientserver.message;
 
 import i.dont.care.tictactoe.Configuration;
 import i.dont.care.tictactoe.serverside.Player;
+import i.dont.care.tictactoe.serverside.PlayerCollection;
 import i.dont.care.tictactoe.serverside.board.CellArray;
 import i.dont.care.utils.Index;
 
 public class MessageFactory {
 	
-	public static Message createGameStarted(CellArray board) {
+	public static Message createGameStarted(CellArray board, Player movingPlayer, PlayerCollection players) {
 		Message message = new Message(Configuration.GAME_STARTED);
 		message.addParameter(Configuration.BOARD, board);
+		message.addParameter(Configuration.PLAYER, movingPlayer);
+		message.addParameter(Configuration.PLAYERS, players);
 		return message;
 	}
 	

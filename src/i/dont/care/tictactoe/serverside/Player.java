@@ -7,20 +7,36 @@ import java.io.Serializable;
 public class Player implements Serializable {
 	private String nickname;
 	private Mark mark;
+	private String imagePath;
 	private boolean ai;
 	
-	public Player(String nickname, Mark mark, boolean ai) {
+	public Player(String nickname, Mark mark, String imagePath, boolean ai) {
 		this.nickname = nickname;
 		this.mark = mark;
+		this.imagePath = imagePath;
 		this.ai = ai;
 	}
-		
+	
+//	public Player(String nickname, Mark mark, boolean ai) {
+//		this.nickname = nickname;
+//		this.mark = mark;
+//		this.ai = ai;
+//	}
+	
 	public String getNickname() {
 		return nickname;
 	}
 	
 	public Mark getMark() {
 		return mark;
+	}
+	
+	public String getImagePath() {
+		return imagePath;
+	}
+	
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 	
 	public boolean isAi() {

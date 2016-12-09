@@ -12,15 +12,21 @@ public class Game extends Content {
 	
 	private Board board;
 	
-	public Game(Rectangle rectangle, ContentType contentType, ContentListener listener) {
+	private String xImagePath;
+	private String oImagePath;
+	
+	public Game(Rectangle rectangle, ContentType contentType, ContentListener listener,
+	            String xImagePath, String oImagePath) {
 		super(rectangle, contentType, listener);
+		this.xImagePath = xImagePath;
+		this.oImagePath = oImagePath;
 		init();
 	}
 	
 	private void init() {
 		board = new Board(this.getBounds(), 3, 3, this, listener,
-				ImageLoader.load(new File("src/images/cross.png")),
-				ImageLoader.load(new File("src/images/nought.png")));
+				ImageLoader.load(new File(xImagePath)),
+				ImageLoader.load(new File(oImagePath)));
 		
 		this.setLayout(null);
 		this.add(board);

@@ -23,8 +23,10 @@ public class Configuration {
 	public static final String PLAYER = "player";
 	public static final String REASON = "reason";
 	public static final String INDEX = "index";
-	public static final String COMMAND = "command";
 	
+	public static final String COMMAND = "command";
 	public static final int CONNECTION_ERROR = -1;
 	public static final int GAME_STOP = -2;
+	public static final String ENEMY_IMAGE = "enemy_image";
+	public static final String PLAYERS = "player_collection";
 }

@@ -14,4 +14,5 @@ public interface IView {
 	void startServer(int port);
 	
 	void stopServer();
+
 }

@@ -30,7 +30,7 @@ public class ConsoleUI implements IView, Observer {
 		System.out.println("Выберите фигуру\n");
 		String mark = scanner.nextLine();
 		
-		connect(new Player(name, mark.charAt(0) == 'X' ? Mark.Player1 : Mark.Player2,  false), "localhost", 6660);
+		//connect(new Player(name, mark.charAt(0) == 'X' ? Mark.Player1 : Mark.Player2,  false), "localhost", 6660);
 	}
 	
 	private void printBoard(CellArray board) {
@@ -67,6 +67,7 @@ public class ConsoleUI implements IView, Observer {
 	public void stopServer() {
 		controller.stopServer();
 	}
+	
 	
 	public void startGame(CellArray board) {
 		System.out.println("Игра началась\n");

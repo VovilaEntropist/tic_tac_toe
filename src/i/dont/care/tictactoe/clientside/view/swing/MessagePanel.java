@@ -40,10 +40,10 @@ public class MessagePanel extends JPanel {
 			return;
 		}
 		
-		new Timer(time, e -> {
-			messageLbl.setText("");
-			messageLbl.setForeground(defaultTextColor);
-			repaint();
-		}).start();
+//		new Timer(time, e -> {
+//			messageLbl.setText("");
+//			messageLbl.setForeground(defaultTextColor);
+//			repaint();
+//		}).start();
 	}
 }

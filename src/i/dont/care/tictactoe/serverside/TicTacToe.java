@@ -70,11 +70,10 @@ public class TicTacToe extends Observable implements RequestProcessor {
 		}
 		
 		lastStep = new Step(index, mark);
+		Player nextPlayer = players.getNext(player);
 		
 		currentBoard.set(index, mark);
-		response.add(MessageFactory.createEndMove(player));
-		
-		Player nextPlayer = players.getNext(player);
+		response.add(MessageFactory.createEndMove(nextPlayer));
 		
 		response.add(MessageFactory.createGameStateChanged(currentBoard, nextPlayer));
 		
@@ -82,11 +81,11 @@ public class TicTacToe extends Observable implements RequestProcessor {
 		if (checker.isDecision(new TicTacToeNode(currentBoard, new Step(index, mark)))) {
 			stage = GameStage.Win;
 			//response.add(MessageFactory.createPlayerWin(player));
-			response.add(MessageFactory.createGameEnded());
+			//response.add(MessageFactory.createGameEnded());
 		} else if (currentBoard.getEmptyCount() == 0) {
 			stage = GameStage.Tie;
 			//response.add(MessageFactory.createTie());
-			response.add(MessageFactory.createGameEnded());
+			//response.add(MessageFactory.createGameEnded());
 		} else {
 			movingPlayer = nextPlayer;
 			//response.add(MessageFactory.createStartMove(nextPlayer));
@@ -127,7 +126,7 @@ public class TicTacToe extends Observable implements RequestProcessor {
 			stage = GameStage.Active;
 			movingPlayer = defineMovingPlayer();
 			
-			publicMessages.add(new PublicMessage(MessageFactory.createGameStarted(currentBoard),
+			publicMessages.add(new PublicMessage(MessageFactory.createGameStarted(currentBoard, movingPlayer, players),
 					new HashSet<>(players)));
 		}
 		
@@ -178,7 +177,7 @@ public class TicTacToe extends Observable implements RequestProcessor {
 		
 		return response;
 	}
-	
+
 	@Override
 	public synchronized MessageCollection handleRequest(Message request) {
 		int command = request.getCommand();
