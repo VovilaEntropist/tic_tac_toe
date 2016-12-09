@@ -100,23 +100,24 @@ public class Model extends Observable implements IModel {
 							}
 						} else {
 							currentPlayerGoes = false;
-							
-							boolean movingPlayerChanged = !movingPlayer.equals(this.movingPlayer);
-							boolean boardChanged = !board.equals(this.board);
-							
-							if (movingPlayerChanged) {
-								this.movingPlayer = movingPlayer;
-							}
-							
-							if (boardChanged) {
-								this.board = board.copy();
-							}
-							
-							if (boardChanged) {
-								setChanged();
-								notifyObservers(message);
-							}
 						}
+						
+						boolean movingPlayerChanged = !movingPlayer.equals(this.movingPlayer);
+						boolean boardChanged = !board.equals(this.board);
+						
+						if (movingPlayerChanged) {
+							this.movingPlayer = movingPlayer;
+						}
+						
+						if (boardChanged) {
+							this.board = board.copy();
+						}
+						
+						if (boardChanged) {
+							setChanged();
+							notifyObservers(message);
+						}
+						
 					}
 					
 					break;

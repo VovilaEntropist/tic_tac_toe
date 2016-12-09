@@ -13,6 +13,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 
+
 public class ConsoleUI implements IView, Observer {
 	
 	private IController controller;
@@ -121,7 +122,7 @@ public class ConsoleUI implements IView, Observer {
 		CellArray board = (CellArray) message.getParameter(Configuration.BOARD);
 		Player player = (Player) message.getParameter(Configuration.PLAYER);
 		String reason = (String) message.getParameter(Configuration.REASON);
-		
+		/*
 		int command = message.getCommand();
 		switch (command) {
 			case Configuration.GAME_STARTED:
@@ -158,7 +159,7 @@ public class ConsoleUI implements IView, Observer {
 				//disconnect();
 				System.out.println("Ошибка подключения: " + reason);
 				break;
-		}
+		}*/
 	}
 	
 	
