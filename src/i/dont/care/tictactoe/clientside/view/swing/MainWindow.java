@@ -79,7 +79,8 @@ public class MainWindow extends JFrame implements IView, ContentListener, Observ
 		Content serverConnect = new ServerConnect(contentBounds, ContentType.ServerConnect,
 				this, mainMenu);
 		Content waitScreen = new WaitScreen(contentBounds, ContentType.WaitScreen, this);
-
+		
+		
 		
 		contents.put(ContentType.MainMenu, mainMenu);
 		contents.put(ContentType.ServerCreate, serverCreate);
@@ -144,6 +145,8 @@ public class MainWindow extends JFrame implements IView, ContentListener, Observ
 				startServer(serverPort);
 				connect(this.player, serverIp, serverPort);
 				break;
+			case ChoiceNickName:
+				break;
 			case ConnectServer:
 				this.player = new Player((String) args[0], (Mark) args[1], (String) args[2], false);
 				
@@ -152,6 +155,9 @@ public class MainWindow extends JFrame implements IView, ContentListener, Observ
 				connect(this.player, serverIp, serverPort);
 				break;
 			case Error:
+				break;
+			case BackMainMenu:
+				contents.show(ContentType.MainMenu);
 				break;
 		}
 	}
@@ -230,6 +236,14 @@ public class MainWindow extends JFrame implements IView, ContentListener, Observ
 	
 	private void winPlayer(Player player) {
 		messagePanel.setMessage("Победил игрок: " +  player.getNickname(), 0);
+		
+		Rectangle contentBounds = new Rectangle(0, 0, contentPanel.getWidth(),
+				contentPanel.getHeight());
+		Content gameEnd = new GameEnd(contentBounds, ContentType.GameEnd, this, player);
+		contents.put(ContentType.GameEnd, gameEnd);
+		contentPanel.add(gameEnd);
+		
+		contents.show(ContentType.GameEnd);
 	}
 	
 	private void endGameTie() {
