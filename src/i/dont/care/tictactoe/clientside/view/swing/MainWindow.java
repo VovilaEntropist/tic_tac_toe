@@ -17,6 +17,8 @@ import i.dont.care.utils.Index;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -25,8 +27,8 @@ public class MainWindow extends JFrame implements IView, ContentListener, Observ
 	private IController controller;
 	private ContentCollection contents;
 	private JPanel contentPanel;
-	
-	private JPanel messagePanel;
+	private MessagePanel messagePanel;
+	private JLabel messageLbl;
 	
 	private String playerNickName;
 	private Mark playerMark;
@@ -44,6 +46,29 @@ public class MainWindow extends JFrame implements IView, ContentListener, Observ
 		validate();
 	}
 	
+	private void init() {
+		messagePanel = new MessagePanel();
+		contentPanel = new JPanel();
+		messageLbl = new JLabel();
+		
+		messagePanel.setPreferredSize(new Dimension(this.getWidth(), 30));
+		
+		this.setLayout(new BorderLayout());
+		this.add(messagePanel, BorderLayout.NORTH);
+		this.add(contentPanel, BorderLayout.CENTER);
+		
+		this.setSize(500, 500);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setVisible(true);
+		
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				disconnect();
+			}
+		});
+	}
+	
 	private void initContent() {
 		Rectangle contentBounds = new Rectangle(0, 0, contentPanel.getWidth(),
 				contentPanel.getHeight());
@@ -55,6 +80,7 @@ public class MainWindow extends JFrame implements IView, ContentListener, Observ
 		Content serverConnect = new ServerConnect(contentBounds, ContentType.ServerConnect,
 				this, mainMenu);
 		Content gameContent = new Game(contentBounds, ContentType.Game, this);
+		Content waitScreen = new WaitScreen(contentBounds, ContentType.WaitScreen, this);
 		
 		
 		contents.put(ContentType.MainMenu, mainMenu);
@@ -62,28 +88,17 @@ public class MainWindow extends JFrame implements IView, ContentListener, Observ
 		contents.put(ContentType.ServerConnect, serverConnect);
 		contents.put(ContentType.PlayerChoice, playerChoice);
 		contents.put(ContentType.Game, gameContent);
+		contents.put(ContentType.WaitScreen, waitScreen);
 		
 		contents.show(ContentType.MainMenu);
 		
 		contentPanel.setLayout(null);
-		
 		contentPanel.add(mainMenu);
 		contentPanel.add(serverCreate);
 		contentPanel.add(serverConnect);
 		contentPanel.add(playerChoice);
 		contentPanel.add(gameContent);
-	}
-	
-	private void init() {
-		messagePanel = new JPanel();
-		contentPanel = new JPanel();
-		
-		this.setLayout(new BorderLayout());
-		this.add(contentPanel, BorderLayout.CENTER);
-		
-		this.setSize(500, 500);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setVisible(true);
+		contentPanel.add(waitScreen);
 	}
 	
 	@Override
@@ -129,13 +144,17 @@ public class MainWindow extends JFrame implements IView, ContentListener, Observ
 				this.playerNickName = (String) args[0];
 				this.playerMark = (Mark) args[1];
 				
+				contents.show(ContentType.WaitScreen);
+				
 				startServer(serverPort);
 				connect(new Player(playerNickName, playerMark, false), serverIp, serverPort);
 				break;
 			case ConnectServer:
 				this.playerNickName = (String) args[0];
 				this.playerMark = (Mark) args[1];
-								
+				
+				contents.show(ContentType.WaitScreen);
+				
 				connect(new Player(playerNickName, playerMark, false), serverIp, serverPort);
 				break;
 			case Error:
@@ -171,20 +190,32 @@ public class MainWindow extends JFrame implements IView, ContentListener, Observ
 	}
 	
 	private void startGame(CellArray board) {
+		messagePanel.setMessage("Игра началась", 1000);
+		
 		contents.show(ContentType.Game);
 	}
 	
 	private void endMove(Player player) {
+		messagePanel.setMessage("Ходит ваш противник", 0);
 		enabledMoves = false;
 	}
 	
 	private void prepareMove(Player player) {
+		messagePanel.setMessage("Ваш ход", 0);
 		enabledMoves = true;
 	}
 	
 	private void updateBoard(CellArray board) {
 		((Game) contents.get(ContentType.Game)).getBoard().updateBoard(board);
 		repaint();
+	}
+	
+	private void winPlayer(Player player) {
+		
+	}
+	
+	private void endGame() {
+		disconnect();
 	}
 	
 	@Override
@@ -212,10 +243,10 @@ public class MainWindow extends JFrame implements IView, ContentListener, Observ
 				updateBoard(board);
 				break;
 			case Configuration.PLAYER_WIN:
-				//winPlayer(player);
+				winPlayer(player);
 				break;
 			case Configuration.GAME_ENDED:
-				//endGame();
+				endGame();
 				break;
 			case Configuration.KICK_PLAYER:
 				//kickPlayer(player, reason);

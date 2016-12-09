@@ -129,9 +129,6 @@ public class TicTacToe extends Observable implements RequestProcessor {
 			
 			publicMessages.add(new PublicMessage(MessageFactory.createGameStarted(currentBoard),
 					new HashSet<>(players)));
-			
-			
-			//response.add(MessageFactory.createGameStarted(currentBoard));
 		}
 		
 		return response;
@@ -153,7 +150,7 @@ public class TicTacToe extends Observable implements RequestProcessor {
 		MessageCollection response = new MessageCollection();
 		
 		if (players.remove(player)) {
-			response.add(MessageFactory.createGameEnded());
+			publicMessages.add(new PublicMessage(MessageFactory.createGameEnded(), new HashSet<>(players)));
 		}
 		
 		return response;

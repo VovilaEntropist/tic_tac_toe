@@ -20,7 +20,7 @@ public class ServerCreate extends BackButtonContent {
 	}
 	
 	private void init() {
-		portEdt = new JTextField(25);
+		portEdt = new JTextField("6660", 25);
 		createBtn = new JButton("Создать");
 				
 		buttonPanel = new CenterPanel(this.getBounds(), 1, 5);

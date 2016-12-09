@@ -21,8 +21,8 @@ public class ServerConnect extends BackButtonContent {
 	}
 		
 	private void init() {
-		ipEdt = new JTextField(25);
-		portEdt = new JTextField(10);
+		ipEdt = new JTextField("localhost", 25);
+		portEdt = new JTextField("6660", 10);
 		connectBtn = new JButton("Присоединиться");
 		
 		JPanel centerPanel = new CenterPanel(this.getBounds(), 1, 5);
