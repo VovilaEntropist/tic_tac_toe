@@ -26,6 +26,7 @@ public class ServerCreate extends BackButtonContent {
 		buttonPanel = new CenterPanel(this.getBounds(), 1, 5);
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 		
+		buttonPanel.add(new JLabel("Порт: "));
 		buttonPanel.add(portEdt);
 		buttonPanel.add(createBtn);
 		

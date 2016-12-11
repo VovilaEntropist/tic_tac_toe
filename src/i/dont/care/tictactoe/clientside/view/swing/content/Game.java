@@ -8,7 +8,7 @@ import i.dont.care.tictactoe.clientside.view.swing.content.listener.ContentListe
 import java.awt.*;
 import java.io.File;
 
-public class Game extends Content {
+public class Game extends BackgroundContent {
 	
 	private Board board;
 	

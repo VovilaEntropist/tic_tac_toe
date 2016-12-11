@@ -28,7 +28,9 @@ public class ServerConnect extends BackButtonContent {
 		JPanel centerPanel = new CenterPanel(this.getBounds(), 1, 5);
 		centerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 		
+		centerPanel.add(new JLabel("IP: "));
 		centerPanel.add(ipEdt);
+		centerPanel.add(new JLabel("Порт: "));
 		centerPanel.add(portEdt);
 		centerPanel.add(connectBtn);
 		

@@ -8,7 +8,7 @@ import i.dont.care.tictactoe.clientside.view.swing.content.listener.ContentListe
 import javax.swing.*;
 import java.awt.*;
 
-public class MainMenu extends Content {
+public class MainMenu extends BackgroundContent {
 	
 	private JPanel buttonPanel;
 	private JButton serverBtn;
@@ -33,7 +33,6 @@ public class MainMenu extends Content {
 		
 		buttonPanel = new CenterPanel(this.getBounds(), 3, 3);
 		GridLayout layout = new GridLayout(4, 1, 0, 25);
-		//FlowLayout layout = new FlowLayout();
 		buttonPanel.setLayout(layout);
 		
 		buttonPanel.add(serverBtn);

@@ -8,6 +8,7 @@ public class CenterPanel extends JPanel {
 	public CenterPanel(Rectangle parentBounds, int widthPart, int heightPart) {
 		super();
 		
+		this.setBackground(new Color(0, 0, 0, 0));
 		int panelWidth = (int) parentBounds.getWidth() / widthPart;
 		int panelHeight = (int) parentBounds.getHeight() / heightPart;
 		int panelX = (int) parentBounds.getWidth() / 2 - panelWidth / 2;

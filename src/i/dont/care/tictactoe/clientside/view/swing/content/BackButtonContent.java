@@ -12,7 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 
-public abstract class BackButtonContent extends Content {
+public abstract class BackButtonContent extends BackgroundContent {
 	
 	protected Content from;
 	protected JPanel backBtn;

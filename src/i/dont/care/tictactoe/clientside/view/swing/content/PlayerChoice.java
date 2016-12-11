@@ -24,8 +24,6 @@ public class PlayerChoice extends BackButtonContent {
 	private static final String FET_MARK_PATH = "src/images/fet.png";
 	
 	private JTextField nickNameEdt;
-	//private ImagePanel xPanel;
-	//private ImagePanel oPanel;
 	
 	private ImagePanel lukMark;
 	private ImagePanel obiMark;

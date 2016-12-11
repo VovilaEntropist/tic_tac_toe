@@ -56,6 +56,7 @@ public class MainWindow extends JFrame implements IView, ContentListener, Observ
 		this.add(messagePanel, BorderLayout.NORTH);
 		this.add(contentPanel, BorderLayout.CENTER);
 		
+		this.setTitle("Крестики-нолкики (STAR WARS EDITION)");
 		this.setSize(700, 700);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
